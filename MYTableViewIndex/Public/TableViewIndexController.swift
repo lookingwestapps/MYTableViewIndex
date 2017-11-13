@@ -106,7 +106,12 @@ public class TableViewIndexController : NSObject {
         guard let scrollView = scrollView else {
             return
         }
-        layout(with: scrollView.contentInset)
+        if #available(iOS 11.0, *) {
+            layout(with: scrollView.adjustedContentInset)
+        } else {
+            // Fallback on earlier versions
+            layout(with: scrollView.contentInset)
+        }
     }
     
     private func layout(with inset: UIEdgeInsets) {
